@@ -4,14 +4,13 @@
     orientation: 'vertical'
     Label:
         text: trainer.text
-    TextInput:
+    SolutionInput:
         id: entry
-        on_text_validate: trainer.check(entry.text); self.focus=True
-        multiline: False
-        focus: True
+        on_text_validate: trainer.check(); self.focus=True
+        on_text: trainer.smart_check()
     Button:
         text: "Enter"
-        on_press: trainer.check(entry.text)
+        on_press: trainer.check()
 
 <TAPopup>:
     title:"Wrong"
@@ -23,3 +22,7 @@
     Button:
         text: "not a number"
         on_release: root.dismiss()
+
+<SolutionInput>:
+	multiline: False
+    focus: True
