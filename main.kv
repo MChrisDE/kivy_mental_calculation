@@ -1,28 +1,151 @@
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+<ScreenManagement>:
+	transition: RiseInTransition ()
+	MainScreen:
+	PlayMenuScreen:
+	TrainingMenuScreen:
+	TrainingScreen:
+	PlayScreen:
+<MainScreen>:
+    name: 'main'
+    BoxLayout:
+    	orientation:'vertical'
+    	Button:
+        	on_release: app.root.current = 'playmenu'
+        	text: 'Play'
+		Button:
+        	on_release: app.root.current = 'trainingmenu'
+        	text: 'Training'
+
+<PlayMenuScreen>:
+	name: 'playmenu'
+	BoxLayout:
+		orientation: 'vertical'
+		Button:
+        	on_release: app.root.current = 'main'
+        	text: 'back to the home screen'
+        	font_size: '20px'
+        Button:
+        	on_release: root.startgame(1); app.root.current = 'play'
+        	text: 'Level 1'
+        	font_size: '20px'
+        Button:
+        	on_release: root.startgame(2); app.root.current = 'play'
+        	text: 'Level 2'
+        	font_size: '20px'
+        Button:
+        	on_release: root.startgame(3); app.root.current = 'play'
+        	text: 'Level 3'
+        	font_size: '20px'
+        Button:
+        	on_release: root.startgame(4); app.root.current = 'play'
+        	text: 'Level 4'
+        	font_size: '20px'
+        Button:
+        	on_release: root.startgame(5); app.root.current = 'play'
+        	text: 'Level 5'
+        	font_size: '20px'
+
+<TrainingMenuScreen>:
+	name: 'trainingmenu'
+    ScrollView:
+        size_hint: (None, None)
+        size: root.size
+        GridLayout:
+            size_hint_y: None
+            cols: 2
+            row_default_height: '40px'
+            row_force_default: True
+            spacing: 0, 10
+            padding: 0, 10
+			Button:
+        		on_release: app.root.current = 'main'
+        		text: 'back to the home screen'
+        		font_size: '20px'
+			Button:
+				on_release: app.root.current = 'training'
+        		text: 'start'
+        		font_size: '20px'
+        	Label:
+        		text: '+, 100'
+        		font_size: '20px'
+			CheckBox:
+				on_active: root.checkbox(self.active, 0)
+			Label:
+        		text: '-, 100'
+        		font_size: '20px'
+			CheckBox:
+				on_active: root.checkbox(self.active, 1)
+			Label:
+        		text: '*, 10'
+        		font_size: '20px'
+			CheckBox:
+				on_active: root.checkbox(self.active, 2)
+			Label:
+        		text: '*, 20'
+        		font_size: '20px'
+			CheckBox:
+				on_active: root.checkbox(self.active, 3)
+			Label:
+        		text: '**2, 100'
+        		font_size: '20px'
+			CheckBox:
+				on_active: root.checkbox(self.active, 4)
+
+<TrainingScreen>:
+	name: 'training'
+
+<PlayScreen>:
+	name: 'play'
+
 <Trainer>:
     id: trainer
     display: entry
-    orientation: 'vertical'
-    Label:
-        text: trainer.text
-    SolutionInput:
-        id: entry
-        on_text_validate: trainer.check(); self.focus=True
-        on_text: trainer.smart_check()
-    Button:
-        text: "Enter"
-        on_press: trainer.check()
+    size: root.size
+    BoxLayout:
+    	size: root.size
+    	trainer: trainer
+    	entry: entry
+    	orientation: 'vertical'
+    	Label:
+     	   text: trainer.text
+     	   font_size: '17dp'
+		SolutionInput:
+			id: entry
+        	on_text_validate: trainer.check(); self.focus=True
+        	on_text: trainer.smart_check()
+		Button:
+			text: "Back"
+			on_release: app.root.current = 'main'
+	FloatLayout:
+		size: root.size
+		Label:
+			text: trainer.time
+			size_hint: (.1, .1)
+			font_size: '17dp'
+			pos_hint: {'top': 1, 'right': 1}
 
 <TAPopup>:
     title:"Wrong"
     Button:
         text: "Try again"
         on_release: root.dismiss()
+
 <ValueErrorPopUp>
     title:"Wrong"
     Button:
         text: "not a number"
         on_release: root.dismiss()
 
+<ScorePopup>
+    title:"Game over"
+    BoxLayout
+    	orientation: 'vertical'
+		Label:
+			text: root.score
+		Button:
+        	text: "Game over"
+        	on_release: root.dismiss(); app.root.current = 'main'
 <SolutionInput>:
 	multiline: False
     focus: True
