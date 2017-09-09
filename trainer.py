@@ -5,9 +5,6 @@ from kivy.uix.textinput import TextInput
 from kivy.clock import Clock
 from random import randint
 import json
-import os
-
-os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'  # opengl error fix for win10
 
 
 class Trainer(Widget):
