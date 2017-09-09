@@ -4,6 +4,7 @@ from kivy.properties import StringProperty, ObjectProperty, OptionProperty
 from kivy.uix.textinput import TextInput
 from kivy.clock import Clock
 from random import randint
+import json
 import os
 
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'  # opengl error fix for win10
@@ -20,27 +21,19 @@ class Trainer(Widget):
 		self.operator = []
 		self.score = 0
 		self.exercises = exercises
-		with open('exercise.txt') as f:
-			data = f.readlines()
-		for i in range(len(data)):
-			if i in exercises or not exercises:
-				line = data[i].replace(" ", "")
-				cursor = 0
+		with open('data.json', 'r') as f:
+			array = json.load(f)
+		for a in range(len(array)):
+			i = array[a]
+			if a in exercises or not exercises:
 				temp = []
-				temp2 = []
-				while cursor != -1:
-					cursor = line.find('[')
-					cursor2 = line.find(']')
-					if cursor2 != -1:
-						temp.append(line[cursor + 1:cursor2].split(','))
-						temp2.append(line[cursor2 + 1:line.find('[', cursor2)])
-					line = line[cursor2 + 1:]
+				for a in range(i['len']):
+					temp.append(i[str(a)])
 				self.numbers.append(temp)
-				del temp2[-1]
-				self.operator.append(temp2)
+				self.operator.append(i["op"])
 		self.new_exercise()  # first exercise
 		if timer:
-			self.time = "5"
+			self.time = "30"
 			self.event = Clock.schedule_interval(self.timer, 1)
 
 	def timer(self, *args):
