@@ -13,7 +13,7 @@ class Trainer(Widget):
 	display = ObjectProperty(None)
 
 	def __init__(self, exercises, timer=False, **kwargs):
-		super(Trainer, self).__init__(**kwargs)  # init BoxLayout
+		super(Trainer, self).__init__(**kwargs)
 		self.numbers = []
 		self.operator = []
 		self.score = 0
@@ -42,7 +42,7 @@ class Trainer(Widget):
 			popup.score = str(self.score)
 			popup.open()
 
-	def check(self):
+	def check(self):  # check on enter
 		try:
 			textinput = int(self.display.text)
 			try:
@@ -70,7 +70,7 @@ class Trainer(Widget):
 			self.text += self.operator[line_index][i - 1]
 			self.text += str(rand[i])
 
-	def smart_check(self):
+	def smart_check(self):  # check on input
 		try:
 			textinput = int(self.display.text)
 			try:
